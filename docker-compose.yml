@@ -67,7 +67,7 @@ services:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - wordpress:/var/www/html
-    command: certonly --webroot --webroot-path=/var/www/html --email zach@azntaiji.com --agree-tos --force-renewal -d zachtaiji.com -d www.zachtaiji.com
+    command: certonly --webroot --webroot-path=/var/www/html --email zach@azntaiji.com --agree-tos --dry-run -d zachtaiji.com -d www.zachtaiji.com
 
 volumes:
   certbot-etc:
