@@ -27,9 +27,7 @@ services:
       - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
       - WORDPRESS_DB_NAME=wordpress
     volumes:
-      - type: bind
-        source: /Volumes/server/var/www/html
-        target: /var/www/html
+      - wordpress:/var/www/html
     networks:
       - wordpress-network
 
@@ -54,9 +52,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - type: bind
-        source: /Volumes/server/var/www/html
-        target: /var/www/html
+      - wordpress:/var/www/html
       - ./nginx-conf:/etc/nginx/conf.d
       - certbot-etc:/etc/letsencrypt
     networks:
@@ -70,13 +66,12 @@ services:
     container_name: certbot
     volumes:
       - certbot-etc:/etc/letsencrypt
-      - type: bind
-        source: /Volumes/server/var/www/html
-        target: /var/www/html
-    command: certonly --webroot --webroot-path=/var/www/html --email zach@azntaiji.com --agree-tos --test-cert -d zachtaiji.com -d www.zachtaiji.com
+      - wordpress:/var/www/html
+    command: certonly --webroot --webroot-path=/var/www/html --email zach@azntaiji.com --agree-tos --force-renewal -d zachtaiji.com -d www.zachtaiji.com
 
 volumes:
   certbot-etc:
+  wordpress:
   mysql-data:
 
 networks:
